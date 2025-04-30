@@ -1,3 +1,11 @@
+'''
+File: forms.py
+Author: Beveridge Ekpolomo
+Description: Contains form classes for user registration and profile management.
+Part of the User Authentication & Profiles module for the University Dashboard application.
+Adapted from Sky Health Check project.
+'''
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.core.exceptions import ValidationError
