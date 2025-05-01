@@ -32,8 +32,6 @@ ALLOWED_HOSTS = ['*']  # Allow all hosts for development
 CSRF_TRUSTED_ORIGINS = [
     'https://*.replit.dev',  # Trust all subdomains on replit.dev
     'https://*.replit.app',  # Trust all subdomains on replit.app
-    'http://127.0.0.1:*',    # Trust local development server
-    'http://localhost:*',    # Trust localhost
 ]
 
 # Cookie settings for Replit environment
@@ -62,9 +60,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    # No third-party apps required
-    # Removed dependencies on crispy_forms and crispy_bootstrap5
-    # Using custom form_tags instead
+    # Third-party apps
+    'crispy_forms',
+    'crispy_bootstrap5',
     
     # Local apps
     'accounts',
@@ -76,12 +74,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    # Removed dependency on whitenoise for static file handling
-    # Using Django's built-in staticfiles instead
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # Temporarily commented out for local development
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -162,8 +157,12 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Static files are handled by Django's built-in staticfiles app
-# No additional packages required
+# Ensure static files are served in development
+WHITENOISE_USE_FINDERS = True
+WHITENOISE_MANIFEST_STRICT = False
+if DEBUG:
+    INSTALLED_APPS.extend(['whitenoise.runserver_nostatic'])
+    MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -176,5 +175,6 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'login'
 
-# Using custom form_tags instead of third-party form libraries
-# No additional configuration required
+# Crispy Forms
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
