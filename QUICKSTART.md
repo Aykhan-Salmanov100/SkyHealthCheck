@@ -42,7 +42,7 @@ source venv/bin/activate
 ### 4. Install Dependencies
 
 ```bash
-pip install -r requirements_local.txt
+pip install -r requirements.txt
 ```
 
 ### 5. Create a PostgreSQL Database

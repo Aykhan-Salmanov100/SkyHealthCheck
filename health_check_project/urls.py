@@ -19,7 +19,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('departments/', include('departments.urls')),
     path('teams/', include('teams.urls')),
-    path('health-checks/', include('health_checks.urls'), name='health_checks'),
+    path('health-checks/', include('health_checks.urls')),
     path('analytics/', include('analytics.urls')),
     
     # Root URL to index view

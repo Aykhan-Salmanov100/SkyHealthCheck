@@ -137,7 +137,12 @@ def session_list(request):
     context = {
         'active_sessions': active_sessions,
         'past_sessions': past_sessions,
-        'future_sessions': future_sessions
+        'future_sessions': future_sessions,
+        'groups': [
+            ('Active', active_sessions, 'bg-success'),
+            ('Upcoming', future_sessions, 'bg-info'),
+            ('Past', past_sessions, 'bg-secondary'),
+        ],
     }
     
     return render(request, 'health_checks/session_list.html', context)
@@ -309,14 +314,14 @@ def participate_session(request, pk):
         if formset.is_valid():
             for form in formset:
                 if form.cleaned_data.get('status'):  # Only save if status is selected
-                    question_id = form.cleaned_data['question']
+                    question = form.cleaned_data['question']
                     status = form.cleaned_data['status']
                     comment = form.cleaned_data.get('comment', '')
                     
                     # Create or update response
                     HealthCheckResponse.objects.update_or_create(
                         session=session,
-                        question_id=question_id,
+                        question=question,
                         user=request.user,
                         defaults={
                             'status': status,

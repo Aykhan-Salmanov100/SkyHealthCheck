@@ -47,3 +47,8 @@ Thumbs.db
 # Secrets
 .env
 .env.local
+# Django collected static files (run collectstatic locally)
+staticfiles/
+
+# uv
+.venv/

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Health Check Questions{% endblock %}
+{% block content %}
+<div class="row mb-3">
+    <div class="col-12 d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">Questions</h2>
+        <a href="{% url 'create_question' %}" class="btn btn-success btn-sm">
+            <i class="fas fa-plus"></i> New Question
+        </a>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body p-0">
+        {% if questions %}
+        <table class="table table-striped table-hover mb-0">
+            <thead>
+                <tr><th>Category</th><th>Question</th><th>Order</th><th class="text-end">Actions</th></tr>
+            </thead>
+            <tbody>
+                {% for question in questions %}
+                <tr>
+                    <td><span class="badge bg-info text-dark">{{ question.category.name }}</span></td>
+                    <td>{{ question.text }}</td>
+                    <td>{{ question.order }}</td>
+                    <td class="text-end">
+                        <a href="{% url 'edit_question' question.id %}" class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit"></i></a>
+                        <a href="{% url 'delete_question' question.id %}" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="alert alert-info m-3">No questions yet. <a href="{% url 'create_question' %}" class="alert-link">Create one</a>.</div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -202,7 +202,23 @@ class HealthCheckSession(models.Model):
             }
             
         return results
-    
+
+    @property
+    def is_active(self):
+        """True if the session is currently open for responses."""
+        now = timezone.now()
+        return self.start_date <= now <= self.end_date
+
+    @property
+    def is_upcoming(self):
+        """True if the session has not started yet."""
+        return self.start_date > timezone.now()
+
+    @property
+    def is_past(self):
+        """True if the session has already ended."""
+        return self.end_date < timezone.now()
+
     class Meta:
         ordering = ['-start_date']
 
